@@ -1,0 +1,38 @@
+build:ubuntu:
+    image: ubuntu:latest
+    before_script:
+    - apt-get update
+    - apt-get upgrade -yqq
+    - apt-get install libncurses5-dev gcc make git exuberant-ctags bc libssl-dev libelf-dev bison flex bsdmainutils rsync -yqq
+    script:
+    - make defconfig
+    - make -j4
+    - mkdir public/
+    - rsync -av arch/ public/
+    artifacts:
+      paths:
+      - public/
+      
+  build:fedora:
+    image: registry.gitlab.com/continuousimprovement/linux-rc:latest
+    script:
+    - make defconfig
+    - make -j4
+    - mkdir public/
+    - rsync -av arch/ public/
+    artifacts:
+      paths:
+      - public/
+  
+  pages:
+    stage: deploy
+    script:
+    - echo 'Nothing to do...'
+    dependencies:
+    - build:ubuntu
+    artifacts:
+      paths:
+      - public
+  
+  
+  

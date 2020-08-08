@@ -14,11 +14,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: add dependency
-      uses: Trass3r/setup-cpp@master
     - run: apt-get install libncurses5-dev gcc make git exuberant-ctags bc libssl-dev libelf-dev bison flex bsdmainutils rsync -yqq
-      uses: Trass3r/setup-cpp@master
     - name: configure
-      uses: Trass3r/setup-cpp@master
       run: time make defconfig
     - name: make
       run: time make -j4
